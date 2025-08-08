@@ -421,3 +421,29 @@ def replay_joint_data(args):
 
             i += 1
             rate.sleep()
+
+
+def get_episode_seconds(episode_path):
+    """
+    Count the number of timesteps in a single episode.
+    """
+    with h5py.File(episode_path, 'r') as f:
+        fps = f.attrs.get('fps', 25)
+        if '/observations/qpos' in f:
+            num_timesteps = len(f['/observations/qpos'])
+        else:
+            raise ValueError(
+                f"Episode {episode_path} does not contain '/observations/qpos' dataset.")
+    return num_timesteps / fps
+
+
+def get_dataset_seconds(episode_root):
+    """
+    Count the total number of timesteps in a dataset.
+    """
+    total_seconds = 0
+    for episode_name in os.listdir(episode_root):
+        episode_path = os.path.join(episode_root, episode_name)
+        if os.path.isfile(episode_path) and episode_path.endswith('.hdf5'):
+            total_seconds += get_episode_seconds(episode_path)
+    return total_seconds

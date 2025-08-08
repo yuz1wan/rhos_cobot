@@ -96,7 +96,8 @@ def main():
         dataset_path = os.path.join(
             dataset_dir, "episode_" + str(args.episode_idx))
 
-    save_data(args, timesteps, actions, actions_eef, dataset_path)
+    save_data(args, timesteps, actions, actions_eef,
+              dataset_path, fps=args.frame_rate)
     print(f"use_depth_img: {args.use_depth_image}")
 
 

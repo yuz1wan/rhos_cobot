@@ -54,7 +54,7 @@ def images_encoding(imgs, mode='color'):
 # 保存数据函数
 
 
-def save_data(args, timesteps, actions, actions_eef, dataset_path):
+def save_data(args, timesteps, actions, actions_eef, dataset_path, fps=25):
     # 数据字典
     data_size = len(actions)
     data_dict = {
@@ -111,6 +111,7 @@ def save_data(args, timesteps, actions, actions_eef, dataset_path):
         #
         root.attrs['sim'] = False
         root.attrs['compress'] = True
+        root.attrs['fps'] = fps
 
         # 创建一个新的组observations，观测状态组
         # 图像组

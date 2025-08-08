@@ -127,7 +127,8 @@ def main():
                 dataset_dir, "episode_" + str(episode_idx))
             episode_idx += 1
 
-        save_data(args, timesteps, actions, actions_eef, dataset_path)
+        save_data(args, timesteps, actions, actions_eef,
+                  dataset_path, fps=args.frame_rate)
 
     print("All episodes collected.")
 
