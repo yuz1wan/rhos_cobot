@@ -63,7 +63,7 @@ def save_data(args, timesteps, actions, actions_eef, dataset_path):
         '/observations/qvel': [],
         '/observations/effort': [],
         '/action': [],
-        '/action_eef': [],  # size(16,)
+        '/action_eef': [],
         '/base_action': [],
         # '/base_action_t265': [],
     }
@@ -417,19 +417,19 @@ class RosOperator:
             if count >= self.args.max_timesteps + 1:
                 break
 
-            # 检测键盘按键（按 q 或 e 退出）
+            # 检测键盘按键（按 s 或 f 退出）
             exit_key = None
             if check_keypress():
                 key = sys.stdin.readline().strip()
-                if key == 'q':
+                if key == 's':
                     print(
-                        "\033[33m\n[INFO] Early stopping triggered by 'q' key.\033[0m\n")
-                    exit_key = 'q'
+                        "\033[33m\n[INFO] Early stopping triggered by 's' key.\033[0m\n")
+                    exit_key = 's'
                     break
-                elif key == 'e':
+                elif key == 'f':
                     print(
-                        "\033[33m\n[INFO] Early stopping triggered by 'e' key.\033[0m\n")
-                    exit_key = 'e'
+                        "\033[33m\n[INFO] Early stopping triggered by 'f' key.\033[0m\n")
+                    exit_key = 'f'
                     break
             # 2 收集数据
             result = self.get_frame()

@@ -1,23 +1,10 @@
 # -- coding: UTF-8
-from rhos_cobot.data_collection import RosOperator, save_data
 import os
-import time
-import signal
-import numpy as np
-import h5py
 import argparse
-import dm_env
-
-import collections
-from collections import deque
-
-import rospy
-from sensor_msgs.msg import JointState
-from sensor_msgs.msg import Image
-from nav_msgs.msg import Odometry
-from cv_bridge import CvBridge
+import signal
 import sys
-import cv2
+
+from rhos_cobot.data_collection import RosOperator, save_data
 
 
 def get_dataset_arguments():
@@ -91,39 +78,54 @@ def main():
     ros_operator = RosOperator(args)
 
     dataset_dir = os.path.join(args.dataset_dir, args.task_name)
+    failed_data_dir = os.path.join(
+        args.dataset_dir, args.task_name, "failed_data")
+    uncompleted_data_dir = os.path.join(
+        args.dataset_dir, args.task_name, "uncompleted_data")
+    if not os.path.exists(dataset_dir):
+        os.makedirs(dataset_dir)
+    if not os.path.exists(failed_data_dir):
+        os.makedirs(failed_data_dir)
+    if not os.path.exists(uncompleted_data_dir):
+        os.makedirs(uncompleted_data_dir)
 
     print(f"use_depth_img: {args.use_depth_image}")
     num_episode = args.episode_num
     episode_idx = 0
     failed_idx = 0
+    uncompleted_idx = 0
     while episode_idx < num_episode:
-        if os.path.exists(os.path.join(dataset_dir, "episode_" + str(episode_idx) + ".hdf5")):
+        while os.path.exists(os.path.join(dataset_dir, "episode_" + str(episode_idx) + ".hdf5")):
             episode_idx += 1
-            continue
+        while os.path.exists(os.path.join(failed_data_dir, "episode_" + str(failed_idx) + ".hdf5")):
+            failed_idx += 1
+        while os.path.exists(os.path.join(uncompleted_data_dir, "episode_" + str(uncompleted_idx) + ".hdf5")):
+            uncompleted_idx += 1
 
         print("======= Collecting data for episode {} =======".format(episode_idx))
         timesteps, actions, actions_eef, exit_type = ros_operator.process()
 
-        if exit_type == 'e':
-            # 按e键退出，保存到失败数据目录
+        if exit_type == 'f':
+            # 按f键退出，保存到失败数据目录
             print("Saving failed demonstration data...")
-            dataset_dir = "./fail_data"
-            if not os.path.exists(dataset_dir):
-                os.makedirs(dataset_dir)
             dataset_path = os.path.join(
-                dataset_dir, args.task_name + "_episode_" + str(episode_idx))
+                failed_data_dir, "episode_" + str(failed_idx))
+            failed_idx += 1
+        elif exit_type == 'normal':
+            # 按n键退出，保存到未完成数据目录
+            print("Saving uncompleted demonstration data...")
+            dataset_path = os.path.join(
+                uncompleted_data_dir, "episode_" + str(uncompleted_idx))
+            uncompleted_idx += 1
         else:
-            # 正常退出或按q键退出，保存到正常数据目录
-            dataset_dir = os.path.join(args.dataset_dir, args.task_name)
-
+            # 按s键退出，保存到正常数据目录
+            print("Saving successful demonstration data...")
             # if(len(actions) < args.max_timesteps):
             #     print("\033[31m\nSave failure, please record %s timesteps of data.\033[0m\n" %args.max_timesteps)
             #     exit(-1)
-
-            if not os.path.exists(dataset_dir):
-                os.makedirs(dataset_dir)
             dataset_path = os.path.join(
                 dataset_dir, "episode_" + str(episode_idx))
+            episode_idx += 1
 
         save_data(args, timesteps, actions, actions_eef, dataset_path)
 

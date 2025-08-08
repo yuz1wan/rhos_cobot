@@ -38,7 +38,7 @@ if __name__ == '__main__':
                         default=False, required=False)
 
     parser.add_argument('--frame_rate', action='store', type=int, help='frame_rate',
-                        default=30, required=False)
+                        default=25, required=False)
 
     parser.add_argument('--only_pub_master', action='store_true',
                         help='only_pub_master', required=False)
