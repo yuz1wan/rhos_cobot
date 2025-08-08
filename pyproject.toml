@@ -1,0 +1,7 @@
+[project]
+name = "rhos_cobot"
+version = "0.1.0"
+description = "A project for robotic arm control and data processing."
+
+[tool.setuptools.packages.find]
+where = ["rhos_cobot"]

@@ -13,12 +13,10 @@ gnome-terminal --title="Astra Camera" -- bash -c "echo '启动Astra多相机...'
 # 等待一段时间，确保相机节点完全启动
 sleep 5
 
-# 2. 新建终端，打开相机观测，重复三次
-for i in {1..3}
-do
-  gnome-terminal --title="RQT Image View $i" -- bash -c "echo '打开第 $i 个相机观测窗口...'; rqt_image_view; exec bash"
-  sleep 1 # 短暂延迟，避免窗口重叠或启动问题
-done
+# 2. 新建终端，打开相机观测
+
+gnome-terminal --title="RQT Image View" -- bash -c "echo '打开相机观测窗口...'; rqt_image_view; exec bash"
+sleep 1 # 短暂延迟，避免窗口重叠或启动问题
 
 # 3. 新建终端，进入机械臂包目录并使用密码配置CAN
 gnome-terminal --title="Piper Arm - Config" -- bash -c "\

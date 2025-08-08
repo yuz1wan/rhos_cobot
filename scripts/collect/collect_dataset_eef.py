@@ -1,6 +1,5 @@
 # -- coding: UTF-8
-from .collect_data_eef import RosOperator
-from .collect_data_eef import save_data
+from rhos_cobot.data_collection import RosOperator, save_data
 import os
 import time
 import signal
