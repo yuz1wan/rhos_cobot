@@ -1,7 +1,6 @@
 #coding=utf-8
 import argparse
-from rhos_cobot.utils import load_hdf5
-from rhos_cobot.post_process import main
+from rhos_cobot.post_process import replay_eef_data
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -36,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('--puppet_eef_right_topic', action='store', type=str, help='puppet_eef_right_topic',
                         default='/pos_cmd_right', required=False)
     
-    parser.add_-argument('--robot_base_topic', action='store', type=str, help='robot_base_topic',
+    parser.add_argument('--robot_base_topic', action='store', type=str, help='robot_base_topic',
                         default='/cmd_vel', required=False)
     parser.add_argument('--use_robot_base', action='store', type=bool, help='use_robot_base',
                         default=False, required=False)
@@ -49,4 +48,4 @@ if __name__ == '__main__':
     
 
     args = parser.parse_args()
-    main(args)
+    replay_eef_data(args)
