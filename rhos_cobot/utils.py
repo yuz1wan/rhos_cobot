@@ -30,14 +30,15 @@ def load_hdf5(dataset_dir, dataset_name):
         #     effort = None
         effort = root['/observations/effort'][()] if 'effort' in root.keys() else None
         action = root['/action'][()]
-        base_action = root['/action/base_action'][()] if 'base_action' in root['/action'].keys() else None
-        action_eef = root['/action/action_eef'][()] if 'action_eef' in root['/action'].keys() else None
+        base_action = root['/base_action'][()] if 'base_action' in root.keys() else None
+        action_eef = root['/action_eef'][()] if 'action_eef' in root.keys() else None
         
         image_dict = dict()
         for cam_name in root[f'/observations/images/'].keys():
             image_dict[cam_name] = root[f'/observations/images/{cam_name}'][()]
 
     if compressed:
+        print("This Data is compressed! Using Decoding!")
         for cam_id, cam_name in enumerate(image_dict.keys()):
             # un-pad and uncompress
             padded_compressed_image_list = image_dict[cam_name]

@@ -22,7 +22,7 @@ def main(args):
     if not os.path.exists(visualize_dir):
         os.makedirs(visualize_dir)
 
-    qpos, qvel, effort, action, action_eef, base_action, image_dict, _ = load_hdf5(
+    qpos, qvel, effort, action, base_action, image_dict, action_eef = load_hdf5(
         os.path.join(dataset_dir, task_name), dataset_name)
 
     print('hdf5 loaded!!')

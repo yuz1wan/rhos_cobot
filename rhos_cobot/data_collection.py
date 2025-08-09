@@ -422,6 +422,7 @@ class RosOperator:
             exit_key = None
             if check_keypress():
                 key = sys.stdin.readline().strip()
+                print(f"Listening keyboard: {key}")
                 if key == 's':
                     print(
                         "\033[33m\n[INFO] Early stopping triggered by 's' key.\033[0m\n")
@@ -431,6 +432,11 @@ class RosOperator:
                     print(
                         "\033[33m\n[INFO] Early stopping triggered by 'f' key.\033[0m\n")
                     exit_key = 'f'
+                    break
+                elif key == 'r':
+                    print(
+                        "\033[33m\n[INFO] Early stopping triggered by 'r' key.\033[0m\n")
+                    exit_key = 'r'
                     break
             # 2 收集数据
             result = self.get_frame()
@@ -501,7 +507,7 @@ class RosOperator:
                                          np.array([puppet_eef_right.pose.position.x, puppet_eef_right.pose.position.y, puppet_eef_right.pose.position.z]), np.array([puppet_eef_right.pose.orientation.x, puppet_eef_right.pose.orientation.y, puppet_eef_right.pose.orientation.z, puppet_eef_right.pose.orientation.w,]), np.array(master_arm_right.position[-1:])], axis=0)
             actions_eef.append(action_eef)
             timesteps.append(ts)
-            print("Frame id: ", count)
+            # print("Frame id: ", count)
             if rospy.is_shutdown():
                 exit(-1)
             rate.sleep()

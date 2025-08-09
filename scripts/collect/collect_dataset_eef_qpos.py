@@ -117,6 +117,9 @@ def main():
             dataset_path = os.path.join(
                 uncompleted_data_dir, "episode_" + str(uncompleted_idx))
             uncompleted_idx += 1
+        elif exit_type == 'r':
+            print("Skip this demonstration data...")
+            continue
         else:
             # 按s键退出，保存到正常数据目录
             print("Saving successful demonstration data...")
