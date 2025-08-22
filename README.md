@@ -1,3 +1,5 @@
 # rhos_cobot
 
-A project for robotic arm control and data processing.
+松灵 cobot 数采及处理脚本 
+
+详细参考 docs/
