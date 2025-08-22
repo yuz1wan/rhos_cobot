@@ -34,7 +34,7 @@ python -m rhos_cobot.post_collect.replay_data_joint.py --dataset_dir ./data/ --t
 ### 3.1 计算时长
 ```bash
 # 计算该任务总时长，填入飞书表格，相机频率默认为25hz，即25步为1s，修改相机频率后请更改 --camera_fps
-python -m rhos_cobot.post_collect.cal_time.py --dataset_dir ./data/task0063_user0012_scene0004_ep0 --camera_fps 25
+python -m scripts.post_collect.cal_time --dataset_dir ./data/ --task_name task74_ep0003
 ```
 ### 3.2 规范化数据名
 统一数据命名为**task_{task_id}_user_{user_id}_scene_{scene_id}**  
