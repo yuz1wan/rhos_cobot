@@ -26,7 +26,7 @@ task_name 可选，指定检查某个任务，否则检查所有任务。
 For example:
 
 ```bash
-python -m scripts.post_collect.visualize_episodes_eef.py --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
+python -m scripts.post_collect.visualize_episodes_eef --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
 ```
 该脚本会在指定的目录下生成可视化结果，包括视频、关节角度图像等。请仔细观察是否存在视频数据损坏、关节角度记录异常（如左右臂数据明显颠倒）、末端执行器数据异常等问题。
 
@@ -37,9 +37,9 @@ python -m scripts.post_collect.visualize_episodes_eef.py --dataset_dir ./data/ -
 机器处于 deploy模式，即可以接收关节角度和末端执行器位置的指令，详见 [deploy模式](./deploy.md)。
 
 ```bash
-python -m scripts.post_collect.replay_data_eef.py --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
+python -m scripts.post_collect.replay_data_eef --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
 
-python -m scripts.post_collect.replay_data_joint.py --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
+python -m scripts.post_collect.replay_data_joint --dataset_dir ./data/ --task_name task0063_user0012_scene0004_ep0 --episode_idx 5
 ```
 该脚本会重播指定的episode数据，并在控制台输出关节角度和末端执行器位置等信息。
 
@@ -59,7 +59,7 @@ scene_id：对应同一个任务不同场景的数据（一个任务可能在不
 
 ```bash
 # 规范化数据名
-python -m scripts.post_collect.data_summary_simple.py
+python -m scripts.post_collect.data_summary_simple
 ```
 要求输入
 1. 处理的文件夹路径，即刚刚采集完的所有episode_{idx}.hdf5文件所在路径
