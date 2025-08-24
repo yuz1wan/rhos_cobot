@@ -95,7 +95,7 @@ def check_constant_or_empty(data, data_key, file_path):
     return False
 
 
-def check_sudden_changes(data, data_key, file_path, threshold=0.5):
+def check_sudden_changes(data, data_key, file_path, threshold=1.0):
     """
     检查时序数据中是否存在突变（即相邻时间步之间的变化过大）。
     这里使用了一个简单的阈值方法。
