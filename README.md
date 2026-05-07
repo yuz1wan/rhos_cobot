@@ -48,6 +48,9 @@ python -m scripts.post_collect.visualize_episodes_eef --dataset_dir ./data/ --ta
 # 重播数据（可选，需先进入 deploy 模式）
 python -m scripts.post_collect.replay_data --dataset_dir ./data/ --task_name <task_name> --episode_idx 5
 
+# 网页复核 stage 标注（默认保存到 <dataset_dir>/fixed_stage/）
+python -m scripts.post_collect.review_stage_web --dataset_dir ./ocl_data/pick_bread_leaf
+
 # 计算时长
 python -m scripts.post_collect.cal_time --dataset_dir ./data/ --task_name <task_name>
 
@@ -60,6 +63,9 @@ python -m scripts.post_collect.data_summary_simple
 ### 3. 部署推理 (deploy)
 
 ```bash
+cp config/servers.example.toml config/servers.toml
+# 按实际机器、模型路径和端口修改 config/servers.toml
+
 # 初始化环境（拔下主臂航插线，重启插排）
 sh scripts/init.sh
 
@@ -72,7 +78,10 @@ source examples/piper_real/.venv/bin/activate
 python -m examples.piper_real.main
 ```
 
-详见 [docs/deploy.md](docs/deploy.md)
+详见：
+
+- 纯手臂部署（最小运行）：[docs/deploy.md](docs/deploy.md)
+- VLM + VLA 双系统推理（含任务拆解、底盘导航、离线 replay）：[docs/dual_system_deploy.md](docs/dual_system_deploy.md)
 
 ## TODO
 - [x] 数据检查代码 merge 进来
